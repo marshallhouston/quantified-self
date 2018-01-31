@@ -40,7 +40,7 @@
   height: 25px;
   align-items: center;
   justify-content: space-between;
-  width: 250px;
+  width: 248px;
 }
 
 .calories-total-amount {
@@ -57,7 +57,7 @@
 
 .remaining-calories {
   @extend %format-row;
-  width: 250px;
+  width: 255px;
 
   .remaining-calories-header {
     @extend %format-header;
