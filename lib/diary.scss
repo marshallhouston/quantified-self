@@ -66,11 +66,19 @@
     border-top: 0;
   }
 
-  .total-remaining-calories {
+  .total-remaining-calories, .diary-total-remaining-calories {
     @extend %format-header;
     @extend %display-right;
     width: 50px;
     border-left: 0;
     border-top: 0;
   }
+}
+
+.calories-goal, .diary-total-calories-consumed {
+  @extend %display-right;
+}
+
+.calories-consumed {
+  border-top: none;
 }
