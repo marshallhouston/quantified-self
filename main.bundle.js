@@ -258,10 +258,14 @@
 	    meals.forEach(function (meal) {
 	      return populateMealTable(meal);
 	    });
-	  }).then(function (meals) {
+	  }).then(function () {
 	    return calculateTotalCalories();
 	  }).then(function () {
 	    return populateRemainingCalories();
+	  }).then(function () {
+	    return renderTotalCaloriesConsumed();
+	  }).then(function () {
+	    return renderDiaryTotalRemainingCalories();
 	  }).catch(function (error) {
 	    return console.error({ error: error });
 	  });
@@ -335,20 +339,49 @@
 
 	var calculateRemainingCalories = function calculateRemainingCalories(meal, totalCalories) {
 	  var remainingCalories = meal[1] - totalCalories;
-	  renderRemainingCalories(meal, remainingCalories);
+	  renderRemainingCalories(meal[0], remainingCalories);
 	};
 
 	var renderRemainingCalories = function renderRemainingCalories(meal, remainingCalories) {
-	  $('#' + meal[0] + '-remaining-calories-count').append('<p class=\'total-remaining-calories\'><strong>' + remainingCalories + '</strong></p>');
+	  $('#' + meal + '-remaining-calories-count').append('<p class=\'total-remaining-calories\'><strong>' + remainingCalories + '</strong></p>');
 	  styleRemainingCalorieCount(meal, remainingCalories);
 	};
 
 	var styleRemainingCalorieCount = function styleRemainingCalorieCount(meal, remainingCalories) {
 	  if (remainingCalories < 0) {
-	    $('#' + meal[0] + '-remaining-calories-count').addClass('negative-remainder');
+	    $('#' + meal + '-remaining-calories-count').addClass('negative-remainder');
 	  } else {
-	    $('#' + meal[0] + '-remaining-calories-count').addClass('positive-remainder');
+	    $('#' + meal + '-remaining-calories-count').addClass('positive-remainder');
 	  }
+	};
+
+	var diaryCaloriesConsumed = function diaryCaloriesConsumed() {
+	  var caloriesConsumed = $('.calories-total-amount');
+	  var totalConsumed = 0;
+	  caloriesConsumed.each(function (index) {
+	    totalConsumed += parseInt(caloriesConsumed[index].innerText);
+	  });
+	  return totalConsumed;
+	};
+
+	var renderTotalCaloriesConsumed = function renderTotalCaloriesConsumed() {
+	  var total = diaryCaloriesConsumed();
+	  $('#diary-calories-consumed-count').append('<p class=\'diary-total-calories-consumed\'><strong>' + total + '</strong></p>');
+	};
+
+	var diaryRemainingCalories = function diaryRemainingCalories() {
+	  var remainingCalories = $('p.total-remaining-calories');
+	  var diaryTotalRemaining = 0;
+	  remainingCalories.each(function (index) {
+	    diaryTotalRemaining += parseInt(remainingCalories[index].innerText);
+	  });
+	  return diaryTotalRemaining;
+	};
+
+	var renderDiaryTotalRemainingCalories = function renderDiaryTotalRemainingCalories() {
+	  var totalRemaining = diaryRemainingCalories();
+	  $('#diary-remaining-calories-count').append('<p class=\'diary-total-remaining-calories\'><strong>' + totalRemaining + '</strong></p>');
+	  styleRemainingCalorieCount("diary", totalRemaining);
 	};
 
 	module.exports = {
@@ -739,7 +772,7 @@
 
 
 	// module
-	exports.push([module.id, ".breakfast-table {\n  width: 300px; }\n\n.meals-container {\n  display: flex; }\n  .meals-container h3 {\n    margin: 0;\n    font-weight: 100; }\n  .meals-container .meal-table {\n    padding: 20px; }\n\n.total-calories, .remaining-calories .remaining-calories-header, .remaining-calories .total-remaining-calories {\n  border: 1px solid black;\n  background-color: lightgrey;\n  padding-left: 5px; }\n\n.remaining-calories {\n  height: 25px;\n  margin: 0px;\n  display: flex;\n  align-items: center; }\n\n.remaining-calories .remaining-calories-header, .remaining-calories .total-remaining-calories {\n  display: flex;\n  justify-content: flex-end;\n  padding-right: 5px; }\n\n.total-calories {\n  display: flex;\n  height: 25px;\n  align-items: center;\n  justify-content: space-between;\n  width: 250px; }\n\n.calories-total-amount {\n  padding-right: 5px; }\n\n.positive-remainder {\n  color: #009600; }\n\n.negative-remainder {\n  color: tomato; }\n\n.remaining-calories {\n  width: 250px; }\n  .remaining-calories .remaining-calories-header {\n    width: 100%;\n    border-top: 0; }\n  .remaining-calories .total-remaining-calories {\n    width: 50px;\n    border-left: 0;\n    border-top: 0; }\n", ""]);
+	exports.push([module.id, ".breakfast-table {\n  width: 300px; }\n\n.meals-container {\n  display: flex; }\n  .meals-container h3 {\n    margin: 0;\n    font-weight: 100; }\n  .meals-container .meal-table {\n    padding: 20px; }\n\n.total-calories, .remaining-calories .remaining-calories-header, .remaining-calories .total-remaining-calories, .remaining-calories .diary-total-remaining-calories {\n  border: 1px solid black;\n  background-color: lightgrey;\n  padding-left: 5px; }\n\n.remaining-calories {\n  height: 25px;\n  margin: 0px;\n  display: flex;\n  align-items: center; }\n\n.remaining-calories .remaining-calories-header, .remaining-calories .total-remaining-calories, .remaining-calories .diary-total-remaining-calories, .calories-goal, .diary-total-calories-consumed {\n  display: flex;\n  justify-content: flex-end;\n  padding-right: 5px; }\n\n.total-calories {\n  display: flex;\n  height: 25px;\n  align-items: center;\n  justify-content: space-between;\n  width: 248px; }\n\n.calories-total-amount {\n  padding-right: 5px; }\n\n.positive-remainder {\n  color: #009600; }\n\n.negative-remainder {\n  color: tomato; }\n\n.remaining-calories {\n  width: 255px; }\n  .remaining-calories .remaining-calories-header {\n    width: 100%;\n    border-top: 0; }\n  .remaining-calories .total-remaining-calories, .remaining-calories .diary-total-remaining-calories {\n    width: 50px;\n    border-left: 0;\n    border-top: 0; }\n\n.calories-consumed {\n  border-top: none; }\n", ""]);
 
 	// exports
 
