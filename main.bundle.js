@@ -289,8 +289,10 @@
 
 	'use strict';
 
+	var baseURL = 'https://ivmh-quantified-self-express.herokuapp.com';
+
 	var getFoods = function getFoods() {
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/foods').then(function (response) {
+	  fetch(baseURL + '/api/v1/foods').then(function (response) {
 	    return handleResponse(response);
 	  }).then(function (foods) {
 	    return getEachFood(foods);
@@ -299,8 +301,8 @@
 	  });
 	};
 
-	var deleteFood = function deleteFood(id, event, removeFoodRow) {
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/foods/' + id, {
+	var deleteFood = function deleteFood(id) {
+	  fetch(baseURL + '/api/v1/foods/' + id, {
 	    method: 'DELETE'
 	  }).then(function (response) {
 	    return checkSuccessfulDelete(response, event, removeFoodRow);
@@ -320,7 +322,7 @@
 	  var foodName = $('#food-name').val();
 	  var foodCalories = $('#food-calories').val();
 
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/foods', {
+	  fetch(baseURL + '/api/v1/foods', {
 	    method: 'POST',
 	    headers: { 'Content-Type': 'application/json' },
 	    body: JSON.stringify({
@@ -369,8 +371,10 @@
 	  $('#food-table-info').prepend('<article class="food-item-row food-item-' + food.id + '" data="food-' + food.id + '">\n      <p class="food-item-name" contenteditable="true">' + food.name + '</p>\n      <p class="food-item-calories" contenteditable="true">' + food.calories + '</p>\n      <div class="button-container">\n        <button id="food-item-' + food.id + '" class="food-item-delete-btn" aria-label="Delete">-</button>\n      </div>\n    </article>');
 	};
 
-	var updateFood = function updateFood(foodId, foodName, foodCalories) {
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/foods/' + foodId, {
+	var updateFood = function updateFood(id) {
+	  var foodName = $('.food-item-' + id).children()[0].innerText;
+	  var foodCalories = $('.food-item-' + id).children()[1].innerText;
+	  fetch(baseURL + '/api/v1/foods/' + id, {
 	    method: 'PUT',
 	    headers: { 'Content-Type': 'application/json' },
 	    body: JSON.stringify({
@@ -399,8 +403,10 @@
 
 	'use strict';
 
+	var baseURL = 'https://ivmh-quantified-self-express.herokuapp.com';
+
 	var getDiaryFoods = function getDiaryFoods() {
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/foods').then(function (response) {
+	  fetch(baseURL + '/api/v1/foods').then(function (response) {
 	    return handleResponse(response);
 	  }).then(function (foods) {
 	    return getEachDiaryFood(foods);
@@ -410,7 +416,7 @@
 	};
 
 	var getMeals = function getMeals() {
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/meals').then(function (response) {
+	  fetch(baseURL + '/api/v1/meals').then(function (response) {
 	    return handleResponse(response);
 	  }).then(function (meals) {
 	    meals.forEach(function (meal) {
@@ -432,7 +438,7 @@
 	var updateMealWithFood = function updateMealWithFood(mealName, foodId, method) {
 	  var mealInfo = { 'breakfast': '1', 'snack': '2', 'lunch': '3', 'dinner': '4' };
 	  var mealId = mealInfo['' + mealName];
-	  fetch('https://ivmh-qs-api.herokuapp.com/api/v1/meals/' + mealId + '/foods/' + foodId, {
+	  fetch(baseURL + '/api/v1/meals/' + mealId + '/foods/' + foodId, {
 	    method: '' + method
 	  });
 	};
