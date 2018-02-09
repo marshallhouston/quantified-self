@@ -1,6 +1,6 @@
 # Quantified Self
 
-Quantified Self is a wellness application that allows a user to track and monitor calories consumed for every meal. A user has a list of foods, each food food having a name and calorie count. Foods can be added, updated and removed. A user also has a Food Diary, which enables them to manage their meals. Meals consist of 'Breakfast', 'Lunch', 'Dinner', and 'Snacks' - each having an alotted amount of calories allowed. As foods are added and removed from a meal, the total and remaining calorie count for that meal is updated - as is the total and remaining calorie counter across all meals.
+Quantified Self is a wellness application that allows a user to track and monitor calories consumed for every meal. A user has a list of foods, and each food has a name and calorie count. Foods can be added, updated and removed. A user also has a Food Diary, which enables them to manage their meals. Meals consist of 'Breakfast', 'Lunch', 'Dinner', and 'Snacks' - each having an alotted amount of calories. As foods are added and removed from a meal, the total and remaining calorie count for that meal is updated - as is the total and remaining calorie counter across all meals.
 
 **Interact with this application via** https://izaxveta.github.io/quantified-self/
 
