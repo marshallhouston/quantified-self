@@ -6,13 +6,16 @@ Quantified Self is a wellness application that allows a user to track and monito
 
 ## Getting Started
 
-To run Quantified Self on your local machine, simply clone this repository by entering into your terminal:
+To run Quantified Self on your local machine, clone this repository:
 
 `$ git clone git@github.com:<YOUR_GITHUB_USERNAME>/quantified-self.git`
 
 Run `$ npm install` to install all the required packages.
 
 To interact with the application locally, run `$ npm start` and visit `localhost:8080/webpack-dev-server/`
+
+## Backend API
+The source code for the backend application is located at https://github.com/marshallhouston/quantified-self-express.
 
 ## Built With
 
